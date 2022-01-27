@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MyHeaderDrawer extends StatefulWidget {
@@ -9,9 +10,9 @@ class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.green[700],
+      color: CupertinoColors.systemGrey,
       width: double.infinity,
-      height: 200,
+      height: MediaQuery.of(context).size.height*0.35,
       padding: EdgeInsets.only(top: 20.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -21,6 +22,8 @@ class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
             height: 70,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
+
+
               image: DecorationImage(
                 image: AssetImage('assets/images/profile.jpg'),
               ),

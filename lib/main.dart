@@ -3,6 +3,8 @@ import 'package:flutter_drawer_example/privacy_policy.dart';
 import 'package:flutter_drawer_example/send_feedback.dart';
 import 'package:flutter_drawer_example/settings.dart';
 
+import 'package:anim_search_bar/anim_search_bar.dart';
+
 import 'contacts.dart';
 import 'dashboard.dart';
 import 'events.dart';
@@ -32,6 +34,15 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var currentPage = DrawerSections.dashboard;
 
+
+  bool a = true;
+  var b = TextEditingController();
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     var container;
@@ -52,20 +63,43 @@ class _HomePageState extends State<HomePage> {
     } else if (currentPage == DrawerSections.send_feedback) {
       container = SendFeedbackPage();
     }
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.green[700],
-        title: Text("Rapid Tech"),
-      ),
-      body: container,
-      drawer: Drawer(
-        child: SingleChildScrollView(
-          child: Container(
-            child: Column(
-              children: [
-                MyHeaderDrawer(),
-                MyDrawerList(),
-              ],
+    return Material(
+
+      child: Scaffold(
+        backgroundColor: Colors.grey,
+        appBar: AppBar(
+          backgroundColor: Colors.grey,
+          elevation: 0,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+
+              AnimSearchBar(
+                  color: Colors.red,
+                  closeSearchOnSuffixTap: true,
+                  autoFocus: true,
+
+
+
+                  width: MediaQuery.of(context).size.width*0.75, textController: b, onSuffixTap:(){
+
+
+              })
+
+            ],
+          ),
+        ),
+        body: container,
+        drawer: Drawer(
+          child: SingleChildScrollView(
+            child: Container(
+
+              child: Column(
+                children: [
+                  MyHeaderDrawer(),
+                  MyDrawerList(),
+                ],
+              ),
             ),
           ),
         ),
@@ -81,22 +115,24 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         // shows the list of menu drawer
         children: [
-          menuItem(1, "Dashboard", Icons.dashboard_outlined,
+          menuItem(1, "Profile", Icons.person,
               currentPage == DrawerSections.dashboard ? true : false),
-          menuItem(2, "Contacts", Icons.people_alt_outlined,
+          menuItem(2, "Patients", Icons.people_alt_outlined,
               currentPage == DrawerSections.contacts ? true : false),
-          menuItem(3, "Events", Icons.event,
+          menuItem(3, "Services", Icons.health_and_safety,
               currentPage == DrawerSections.events ? true : false),
-          menuItem(4, "Notes", Icons.notes,
+          menuItem(4, "Medicines", Icons.medication,
               currentPage == DrawerSections.notes ? true : false),
           Divider(),
-          menuItem(5, "Settings", Icons.settings_outlined,
+          menuItem(5, "Reception Control", Icons.remove_red_eye,
               currentPage == DrawerSections.settings ? true : false),
-          menuItem(6, "Notifications", Icons.notifications_outlined,
+
+          menuItem(6, "Document Gallery", Icons.image,
               currentPage == DrawerSections.notifications ? true : false),
           Divider(),
-          menuItem(7, "Privacy policy", Icons.privacy_tip_outlined,
+          menuItem(7, "Setting", Icons.settings,
               currentPage == DrawerSections.privacy_policy ? true : false),
+          Divider(),
           menuItem(8, "Send feedback", Icons.feedback_outlined,
               currentPage == DrawerSections.send_feedback ? true : false),
         ],
