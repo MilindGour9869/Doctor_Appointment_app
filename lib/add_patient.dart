@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
+import 'search_bar.dart';
+
+bool group_tap = false;
 
 
 class AddPatient extends StatefulWidget {
@@ -25,6 +28,9 @@ class _AddPatientState extends State<AddPatient> {
   var default_group = [ "tac" , " toe"];
   var select_group= TextEditingController();
   String selected_group;
+
+
+
 
 
 
@@ -167,10 +173,12 @@ class _AddPatientState extends State<AddPatient> {
                Container(
 
                  width: MediaQuery.of(context).size.width*0.7,
-                 child: TextFormField(
+                 child: TextField(
                    controller:select_group ,
+
                    decoration: InputDecoration(
                      border: OutlineInputBorder(),
+
 
                    )
 
@@ -179,30 +187,18 @@ class _AddPatientState extends State<AddPatient> {
 
 
                TextButton.icon(onPressed: (){
-                       showDialog(context: context, builder: (context)=>
+
+
+                       showDialog(context: context ,  builder: (context)=>
 
                            Padding(
-                             padding: const EdgeInsets.all(40.0),
-                             child: Container(
-
-                         color: Colors.red,
-                               child: Column(
-                                 children: [
-                                   Material(
-                                     child: TextField(
-                                       controller: select_group,
-                                       decoration: InputDecoration(
-                                         prefixIcon: Icon(Icons.settings),
-                                         hintText: "search / Add"
-//                                         suffixIcon: TextButton.icon(onPressed: (){}, icon: Icon(Icons.add), label: Text(''))
-                                       ),
-                                     ),
-                                   ),
-
-                                 ],
-                               )
-                       ),
+                             padding: const EdgeInsets.all(20.0),
+                             child: ListSearch(),
                            ));
+
+                // showSearch(context: context, delegate: Search());
+
+
 
                }, icon: Icon(Icons.arrow_drop_down_circle), label: Text(''))
              ],
@@ -222,4 +218,60 @@ class _AddPatientState extends State<AddPatient> {
       ),
     );
   }
+
+
 }
+
+class Search extends SearchDelegate<String> {
+
+
+
+
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () {
+
+        },
+      )
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return null;
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    return null;
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    final suggestions = query.isEmpty ? ['qq' , 'ecc' , 'ec']: [];
+    return Container(
+      height: 200,
+
+      child: ListView.builder(
+        itemCount: suggestions.length,
+        itemBuilder: (content, index) => ListTile(
+            leading: IconButton(
+              icon: Icon(Icons.adjust),
+              onPressed: (){
+                group_tap=!group_tap;
+
+
+              },
+            ), title: Text(suggestions[index])),
+      ),
+    );
+  }
+}
+
+
+
+
